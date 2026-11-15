@@ -1,0 +1,348 @@
+@font-face {
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/heebo-hebrew.woff2") format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/heebo-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/heebo-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/frank-ruhl-hebrew.woff2") format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/frank-ruhl-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/frank-ruhl-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+:root {
+  --font-heebo: "Heebo", "Segoe UI", system-ui, sans-serif;
+  --font-frank-ruhl: "Frank Ruhl Libre", "Times New Roman", serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-surface-base text-ink antialiased;
+    font-family: var(--font-heebo), system-ui, sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(199, 134, 122, 0.32);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #c7867a;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-page px-6 sm:px-8 lg:px-12;
+  }
+
+  .section {
+    @apply py-20 sm:py-24 lg:py-32;
+  }
+
+  /* The client wall earns less air than a full section: three short rows of
+     names, so the space above and below is cut by a third. */
+  .section-clients {
+    @apply py-14 sm:py-16 lg:py-20;
+  }
+
+  .eyebrow {
+    @apply flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.42em] text-accent;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply block h-px w-8 bg-accent opacity-70;
+  }
+
+  .heading-section {
+    @apply font-sans text-3xl font-black leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-5xl;
+  }
+
+  /* Scroll reveal — content is visible by default; the animation only applies
+     once the `js` class is set on <html> (see layout.tsx). */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+}
+
+/* The exploded movement in the hero. The pointer sets --mx / --my (-0.5 … 0.5);
+   the card drifts toward it and turns a few degrees, the photograph drifts the
+   other way, and the veil of the same shot slides further still — three layers
+   moving apart, which is what the eye reads as depth. No resting tilt, so the
+   photograph never blurs; only a short ease while it travels. There is no lit
+   layer on the photograph itself: light on the picture showed where it ends.
+   Reduced-motion visitors get the still photograph, and touch devices never
+   move it (the component ignores non-mouse pointers). */
+.movement-card,
+.movement-photo,
+.movement-veil {
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .movement-frame:hover .movement-card {
+    transform: translate3d(calc(var(--mx, 0) * -22px), calc(var(--my, 0) * -22px), 0)
+      rotateY(calc(var(--mx, 0) * 6deg)) rotateX(calc(var(--my, 0) * -5deg));
+  }
+
+  .movement-frame:hover .movement-photo {
+    transform: translate3d(calc(var(--mx, 0) * 40px), calc(var(--my, 0) * 40px), 0)
+      scale(1.03);
+  }
+
+  .movement-frame:hover .movement-veil {
+    transform: translate3d(calc(var(--mx, 0) * -54px), calc(var(--my, 0) * -54px), 0)
+      scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .movement-card,
+  .movement-photo,
+  .movement-veil {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* A rose light that follows the cursor across the whole home page. The
+   component sets --glow-x / --glow-y (viewport pixels, already eased) and --glow
+   (0 → 1 once the mouse has moved). It sits on top of the page and lets every
+   click through; over the hero photograph it fades out, so it never lights the
+   picture's bounds. */
+.rose-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  /* Invisible until the first mouse move sets --glow; the component also keeps
+     the layer `display: none` until then. */
+  opacity: var(--glow, 0);
+  transition: opacity 0.45s ease-out;
+}
+
+/* Two halos drawn around the cursor: a wide, soft one for the glow the eye
+   catches at the edge of vision, and a smaller, warmer core that makes the
+   light readable as "here". Together they reach roughly 14% rose at the very
+   centre. Both fade to nothing well before the photo's edge. */
+.rose-glow::before,
+.rose-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+}
+
+.rose-glow::before {
+  background-image: radial-gradient(
+    circle 18rem at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(199, 134, 122, 0.2),
+    rgba(199, 134, 122, 0.14) 32%,
+    rgba(199, 134, 122, 0.06) 62%,
+    transparent 100%
+  );
+}
+
+.rose-glow::after {
+  background-image: radial-gradient(
+    circle 32rem at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(199, 134, 122, 0.07),
+    rgba(199, 134, 122, 0.035) 55%,
+    transparent 100%
+  );
+}
+
+/* No hover at all → a touch screen; no fine pointer → not a mouse. */
+@media (hover: none) and (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .rose-glow {
+    display: none !important;
+  }
+}
+
+/* The wheel at the end of the opening act. JS sets the spin transform on
+   .watch-spin; the rim light follows the same angle, and the driven wheel
+   turns against it in the ratio of their teeth — 48 against 18. */
+.watch-spin {
+  will-change: transform;
+}
+
+/* Teeth for teeth: 48/18 = two and two-thirds turns, the other way round.
+   The wheel is drawn around its own origin, so the turn needs no offset. */
+#wheel-driven {
+  transform-box: view-box;
+  transform-origin: 296px 252px;
+  rotate: calc(var(--wheel, 0deg) * -2.667);
+}
+
+/* A band of light that runs around the rim as the wheel turns. */
+.wheel-rim {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(226, 179, 166, 0.22) 45deg,
+    transparent 120deg
+  );
+  -webkit-mask-image: radial-gradient(circle, transparent 66%, #000 68%, #000 71.5%, transparent 73%);
+  mask-image: radial-gradient(circle, transparent 66%, #000 68%, #000 71.5%, transparent 73%);
+  transform: rotate(var(--wheel, 0deg));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wheel-rim {
+    transform: none;
+  }
+}
+
+/* A circle of soft rose light around the invitation — light only, no line.
+   The light is built the way the cursor's halo is: one broad, soft rose patch
+   that never gathers into a stroke. The patch sits a little way out from the
+   centre so the eye reads a large circle with the light going round it, and
+   JS turns the layer (`--ring-turn`) to carry it. Nothing is drawn over the
+   text: the layer sits behind it and lets clicks by. */
+.invitation-ring {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  /* Room around the invitation: the light gathers a little way out from the
+     text, so the circle reads as a large halo rather than a glow hugging it. */
+  padding: clamp(5.5rem, 16vw, 11rem) clamp(4rem, 14vw, 9.5rem);
+}
+
+.invitation-ring__frame {
+  position: relative;
+  z-index: 1;
+}
+
+/* The travelling light: a single broad rose patch, bright in the middle and
+   falling away softly in every direction, so nothing reads as a line. It is
+   placed just outside the centre and enlarged to cover the circle, so turning
+   the layer carries the patch around that circle. */
+.invitation-ring__light {
+  position: absolute;
+  inset: -4%;
+  border-radius: 50%;
+  pointer-events: none;
+  rotate: var(--ring-turn, 0deg);
+  background-image: radial-gradient(
+    34% 34% at 50% 60%,
+    rgba(240, 200, 188, 0.34) 0%,
+    rgba(226, 171, 157, 0.22) 30%,
+    rgba(199, 134, 122, 0.11) 58%,
+    rgba(199, 134, 122, 0.04) 82%,
+    transparent 100%
+  );
+  filter: blur(26px) saturate(1.15);
+  will-change: transform;
+}
+
+/* A faint, even glow around the whole circle, so the light reads as a circle
+   and not only as one drifting spot. Far softer than the patch. */
+.invitation-ring__light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-image: radial-gradient(
+    closest-side,
+    transparent 46%,
+    rgba(199, 134, 122, 0.02) 58%,
+    rgba(199, 134, 122, 0.055) 72%,
+    rgba(199, 134, 122, 0.02) 86%,
+    transparent 98%
+  );
+  filter: blur(28px);
+}
+
+/* A third, faint wash reaching well past the circle, the way the wide halo
+   reaches past the cursor's core. */
+.invitation-ring__light::after {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  border-radius: 50%;
+  background-image: radial-gradient(
+    closest-side,
+    transparent 52%,
+    rgba(199, 134, 122, 0.05) 72%,
+    rgba(199, 134, 122, 0.025) 88%,
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitation-ring__light {
+    rotate: none;
+  }
+}

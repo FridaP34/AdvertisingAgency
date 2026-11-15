@@ -1,0 +1,30 @@
+# תלויות ובנייה
+node_modules/
+.next/
+out/
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# משתני סביבה — סודות, לא להעלות
+.env
+.env.local
+.env.*.local
+
+# הדגמה מקומית (Supabase מדומה + קבצים שהועלו אליו)
+local-supabase-data/
+tools/local-supabase/
+.env.demo.local
+
+# אישורי מסנן מקומיים, לא לפרסם
+.certs/
+
+# קבצי דיבוג זמניים
+tools/tmp-*
+
+# חומר מקור של מודעות (המודעות הוכנו ל-public/works)
+SampleAds/
+
+# מערכת
+.DS_Store
+Thumbs.db
+*.log
