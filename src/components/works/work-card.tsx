@@ -72,6 +72,10 @@ export function WorkCard({ work, className, priority = false }: WorkCardProps) {
               height={cover.height ?? 1400}
               priority={priority}
               sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+              // Served straight from Storage. Through `/ _next/image` every
+              // picture costs a Vercel function call, and that function's
+              // burst limit answers 403 on a gallery that shows many at once.
+              unoptimized
               className="max-h-full w-auto max-w-full object-contain transition-transform duration-[1100ms] ease-smooth group-hover:scale-[1.02]"
             />
           </div>

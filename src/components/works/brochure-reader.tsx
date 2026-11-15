@@ -42,6 +42,7 @@ function Page({ src, size, aspect, index, total, title }: {
           width={size!.width}
           height={size!.height}
           sizes="(max-width: 768px) 100vw, 46rem"
+          unoptimized
           className="h-auto w-full"
           // The first page is the one above the fold; the rest load in turn.
           priority={index === 0}
@@ -53,6 +54,7 @@ function Page({ src, size, aspect, index, total, title }: {
             alt={`${title} — עמוד ${index + 1}`}
             fill
             sizes="(max-width: 768px) 100vw, 46rem"
+            unoptimized
             className="object-contain"
             priority={index === 0}
           />

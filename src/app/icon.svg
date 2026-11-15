@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Tab icon: the brand letter in the site's rose-copper on the dark ground. -->
+  <circle cx="32" cy="32" r="32" fill="#141110" />
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#c7867a" stroke-width="2" opacity="0.55" />
+  <text
+    x="32"
+    y="32"
+    fill="#c7867a"
+    font-family="'Frank Ruhl Libre', 'Times New Roman', serif"
+    font-size="38"
+    font-weight="600"
+    text-anchor="middle"
+    dominant-baseline="central"
+  >מ</text>
+</svg>

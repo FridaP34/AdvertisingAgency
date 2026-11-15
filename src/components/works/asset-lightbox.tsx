@@ -82,6 +82,7 @@ export function AssetLightbox({ assets, title, open, onClose }: LightboxProps) {
           alt={asset.caption ? `${title} — ${asset.caption}` : title}
           fill
           sizes="100vw"
+          unoptimized
           className="object-contain p-4 sm:p-10"
           priority
         />

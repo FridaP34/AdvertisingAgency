@@ -35,6 +35,7 @@ export function ImagePlate({
           width={asset.width ?? 1000}
           height={asset.height ?? 1250}
           sizes={sizes}
+          unoptimized
           className="max-h-full w-auto max-w-full object-contain transition-transform duration-[900ms] ease-smooth group-hover:scale-[1.02]"
         />
       </div>

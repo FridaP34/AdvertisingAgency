@@ -78,6 +78,7 @@ function ClientItem({ client }: { client: Client }) {
               width={220}
               height={80}
               sizes="200px"
+              unoptimized
               className="h-auto max-h-6 w-auto max-w-full object-contain brightness-0 invert opacity-80 transition-opacity duration-500 group-hover:opacity-100"
             />
           ) : (

@@ -33,6 +33,10 @@ export const metadata: Metadata = {
     images: ["/opengraph-image.png"],
   },
   robots: { index: true, follow: true },
+  // The tab mark is `icon.svg`, picked up by convention. Only the theme colour
+  // is declared so the browser renders that mark on its own dark ground.
+  icons: { icon: "/icon.svg" },
+  themeColor: "#141110",
 };
 
 export const viewport: Viewport = {
