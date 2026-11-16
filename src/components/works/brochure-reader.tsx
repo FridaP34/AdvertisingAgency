@@ -112,20 +112,16 @@ export function BrochureReader({ base, pages, aspect, title }: BrochureReaderPro
   const shape = sizes.find((size) => size.width > 0);
 
   // Without page pictures there is nothing to read here. A PDF frame would
-  // need a viewer the browser may not have, so the file is offered as a link.
+  // need a viewer the browser may not have, and a bare PDF link is held back
+  // by some content filters, so the booklet is offered through contact.
   if (pages.length === 0) {
     const file = base.replace(/\/pages$/, "");
     return (
       <div className="mx-auto w-full max-w-[46rem] rounded-sm border border-line bg-surface-base p-8 text-center">
         <p className="text-sm text-ink-dim">החוברת אינה זמינה לתצוגה ברגע זה.</p>
-        <a
-          href={file}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-3 inline-block text-sm text-accent underline-offset-4 hover:underline"
-        >
-          הורדת החוברת (PDF)
-        </a>
+        <p className="mt-3 text-xs text-ink-faint">
+          אם הקישור אינו נפתח, אפשר לפנות אלינו ולקבל את החוברת בדרך אחרת.
+        </p>
       </div>
     );
   }

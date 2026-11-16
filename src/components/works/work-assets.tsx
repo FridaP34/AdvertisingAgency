@@ -102,18 +102,47 @@ export function WorkAssets({ title, assets, kind = "presentation" }: WorkAssetsP
         <section className="border-t border-line pt-8">
           <h2 className="mb-4 text-[0.7rem] tracking-[0.3em] text-accent">הקובץ</h2>
           <ul className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-dim">
-            {downloads.map((file) => (
-              <li key={file.src}>
-                <a
-                  href={file.src}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline-offset-4 hover:text-accent hover:underline"
-                >
-                  {file.caption ?? `הורדת הקובץ (PDF${file.pages?.length ? `, ${file.pages.length} עמודים` : ""})`}
-                </a>
-              </li>
-            ))}
+            {downloads.map((file) => {
+              // Beside the file, the pages it is made of: a reader whose
+              // filter holds back PDFs can still open every page as a
+              // picture, and the file itself stays the one-click copy.
+              const pages = file.pages?.length
+                ? Array.from({ length: file.pages.length }, (_, index) =>
+                    `${pagesBase(file.src)}/page-${String(index + 1).padStart(2, "0")}.webp`,
+                  )
+                : [];
+              return (
+                <li key={file.src} className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <a
+                    href={file.src}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline-offset-4 hover:text-accent hover:underline"
+                  >
+                    {file.caption ??
+                      `הורדת הקובץ (PDF${file.pages?.length ? `, ${file.pages.length} עמודים` : ""})`}
+                  </a>
+                  {pages.length ? (
+                    <span className="text-xs text-ink-faint">
+                      לצפייה בעמודים:{" "}
+                      {pages.map((src, index) => (
+                        <span key={src}>
+                          {index > 0 ? " · " : null}
+                          <a
+                            href={src}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="underline-offset-4 hover:text-accent hover:underline"
+                          >
+                            {index + 1}
+                          </a>
+                        </span>
+                      ))}
+                    </span>
+                  ) : null}
+                </li>
+              );
+            })}
           </ul>
         </section>
       ) : null}
