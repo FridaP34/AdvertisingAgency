@@ -1,14 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Tab icon: the brand letter, dark and square-cut, inside a rose-copper disc. -->
-  <circle cx="32" cy="32" r="32" fill="#c7867a" />
-  <text
-    x="32"
-    y="33"
-    fill="#141110"
-    font-family="Heebo, David, Arial, sans-serif"
-    font-size="42"
-    font-weight="900"
-    text-anchor="middle"
-    dominant-baseline="central"
-  >מ</text>
+  <!-- Tab mark: the brand's מ, square-cut, dark on a rose disc.
+       Drawn as geometry, not as <text>: a favicon cannot load a webfont, so a
+       text letter would render in whatever font the browser happens to pick.
+       The letter: a top bar, three stems hung from it, and the square-cut
+       notch between the middle and the right stem that makes it a מ. -->
+  <circle cx="32" cy="32" r="32" fill="#c7867a"/>
+  <g fill="#141110">
+    <path d="M12 13h40v8H12z"/>
+    <path d="M12 13h9v39h-9z"/>
+    <path d="M30 13h9v38h-9z"/>
+    <path d="M48 21h6v31h-6z"/>
+    <path d="M30 44h24v8H30z"/>
+  </g>
 </svg>

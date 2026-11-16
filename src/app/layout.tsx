@@ -8,6 +8,14 @@ import "./globals.css";
 // Fonts are self-hosted from /public/fonts (see @font-face in globals.css)
 // so the build and the site never depend on fetching Google Fonts at runtime.
 
+// 1200×630, paper background, brand wordmark and the rose tab mark.
+const SHARE_IMAGE = {
+  url: "/opengraph-image.png",
+  width: 1200,
+  height: 630,
+  alt: `${site.brand.name} — ${site.meta.title}`,
+};
+
 export const metadata: Metadata = {
   title: {
     default: site.meta.title,
@@ -16,21 +24,23 @@ export const metadata: Metadata = {
   description: site.meta.description,
   metadataBase: new URL(siteUrl()),
   alternates: { canonical: "/" },
-  // The share preview is a file rather than a rendered picture: it is drawn
-  // once, stays the same for every page, and needs no fonts at request time.
+  // One share card for both networks, served from /public. It is a plain PNG
+  // rather than an ImageResponse route because satori (behind ImageResponse)
+  // cannot read a woff2 font, and the brand's only Hebrew face is woff2 — the
+  // letter would have come out as a box, or the build would have failed.
   openGraph: {
     type: "website",
     locale: "he_IL",
     siteName: site.brand.name,
     title: site.meta.title,
     description: site.meta.description,
-    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: site.meta.title }],
+    images: [SHARE_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: site.meta.title,
     description: site.meta.description,
-    images: ["/opengraph-image.png"],
+    images: [SHARE_IMAGE],
   },
   robots: { index: true, follow: true },
   // The tab mark is `icon.svg`, picked up by convention.
