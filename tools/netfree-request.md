@@ -23,7 +23,7 @@
 - `https://etqugojfewwpediksczs.supabase.co/rest/v1/` — נתוני האתר
 - `https://etqugojfewwpediksczs.supabase.co/storage/v1/object/public/…` — תמונות
 
-## 3. דומיין האתר (כשיחובר)
+## 3. דומיין האתר
 
     https://m.plavinsky.co.il
 

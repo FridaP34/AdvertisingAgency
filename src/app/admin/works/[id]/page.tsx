@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { requireAdminUser } from "@/lib/admin/require-user";
 import { getWorkForEdit } from "@/lib/admin/works";
 import { SetupNotice } from "@/components/admin/setup-notice";
 import { WorkForm } from "@/components/admin/work-form";
@@ -14,6 +15,7 @@ type PageProps = { params: Promise<{ id: string }> };
 
 export default async function EditWorkPage({ params }: PageProps) {
   if (!isSupabaseConfigured()) return <SetupNotice />;
+  await requireAdminUser();
 
   const { id } = await params;
   const draft = await getWorkForEdit(id);

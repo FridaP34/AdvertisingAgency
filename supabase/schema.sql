@@ -88,8 +88,14 @@ security definer
 set search_path = public
 as $bump$
 begin
+  -- `where id` is the single-row key of the table. Without it the update has
+  -- no WHERE clause, which the database refuses inside a trigger — and then
+  -- every insert and update of a work failed with "21000". See
+  -- `supabase/fix-works-version-trigger.sql` for fixing a database that was
+  -- set up before this line existed.
   update public.works_version_state
-     set version = md5(random()::text || clock_timestamp()::text);
+     set version = md5(random()::text || clock_timestamp()::text)
+   where id;
   return null;
 end;
 $bump$;

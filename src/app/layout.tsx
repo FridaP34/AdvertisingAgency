@@ -33,14 +33,14 @@ export const metadata: Metadata = {
     images: ["/opengraph-image.png"],
   },
   robots: { index: true, follow: true },
-  // The tab mark is `icon.svg`, picked up by convention. Only the theme colour
-  // is declared so the browser renders that mark on its own dark ground.
+  // The tab mark is `icon.svg`, picked up by convention.
   icons: { icon: "/icon.svg" },
-  themeColor: "#141110",
 };
 
+// The theme colour lives here rather than in `metadata`: Next.js only reads it
+// from the viewport export, and warns on every page that sets it in metadata.
 export const viewport: Viewport = {
-  themeColor: "#0b0b0c",
+  themeColor: "#141110",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,

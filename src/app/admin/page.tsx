@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { requireAdminUser } from "@/lib/admin/require-user";
 import { listAllWorks } from "@/lib/admin/works";
 import { SetupNotice } from "@/components/admin/setup-notice";
 import { WorksTable } from "@/components/admin/works-table";
@@ -13,6 +14,10 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminWorksPage() {
   if (!isSupabaseConfigured()) return <SetupNotice />;
+
+  // A layout does not run again on client-side navigation, so the page checks
+  // the session itself before reading anything from the database.
+  await requireAdminUser();
 
   const works = await listAllWorks();
 

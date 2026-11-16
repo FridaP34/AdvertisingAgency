@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/content/site";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { requireAdminUser } from "@/lib/admin/require-user";
 import { AdminNav } from "@/components/admin/admin-nav";
 
 /**
@@ -8,7 +10,9 @@ import { AdminNav } from "@/components/admin/admin-nav";
  *
  * The public site's header and footer are replaced by a compact admin bar, so
  * it is always obvious that you are inside the management area. Access is
- * enforced in `middleware.ts`. `robots.ts` keeps it out of search engines.
+ * enforced here, through `requireAdminUser()`, for every page under `/admin`;
+ * `robots.ts` keeps the area out of search engines. The login page has its own
+ * layout, so this one never runs for it.
  */
 export const metadata: Metadata = {
   title: {
@@ -18,7 +22,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  // Without Supabase there is nothing to sign in to, and the setup notice
+  // explains that better than a login that could not work.
+  if (isSupabaseConfigured()) await requireAdminUser();
+
   return (
     <div className="flex min-h-screen flex-col bg-surface-base">
       <header className="border-b border-line bg-surface-soft">

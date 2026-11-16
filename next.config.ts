@@ -5,16 +5,9 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
-        // Supabase Storage (the real project, once it is provisioned)
+        // Supabase Storage — the only host the site ever loads files from.
         protocol: "https",
         hostname: "*.supabase.co",
-        pathname: "/storage/v1/object/public/**",
-      },
-      // Local demo storage (tools/local-supabase) — removed before going live.
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "54321",
         pathname: "/storage/v1/object/public/**",
       },
     ],

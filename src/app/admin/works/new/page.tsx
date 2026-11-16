@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { requireAdminUser } from "@/lib/admin/require-user";
 import { listAllWorks } from "@/lib/admin/works";
 import { emptyDraft } from "@/lib/works/draft";
 import { SetupNotice } from "@/components/admin/setup-notice";
@@ -11,6 +12,7 @@ export const dynamic = "force-dynamic";
 
 export default async function NewWorkPage() {
   if (!isSupabaseConfigured()) return <SetupNotice />;
+  await requireAdminUser();
 
   // New works go to the top of the list by default: ten below the lowest
   // display order, so it stays above the first row however low the numbers

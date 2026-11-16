@@ -41,7 +41,15 @@ type Message = {
   text: string;
 };
 
-/** Sends through PowerShell's HttpClient (system certificate store). */
+/**
+ * Sends through PowerShell's HttpClient (system certificate store).
+ *
+ * This is the last resort for a local Windows machine behind a filtering
+ * proxy (NetFree) whose certificate Node cannot verify on its own. It never
+ * runs on the server: Vercel is Linux, and the check below only offers it on
+ * `win32`. It trusts whatever the operating system already trusts, so it adds
+ * no certificate of its own and weakens no verification.
+ */
 function postWithSystemClient(
   url: string,
   headers: Record<string, string>,
@@ -179,6 +187,7 @@ export async function sendMessage(message: Message): Promise<SendResult> {
     console.error("[contact] system-trust request failed:", (error as Error).message);
   }
 
+  // Local Windows only — see the note on `postWithSystemClient`.
   if (process.platform === "win32") {
     const result = await postWithSystemClient(RESEND_URL, headers, body);
     if (result.ok) return result;
