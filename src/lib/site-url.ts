@@ -7,7 +7,7 @@
  * variable still produces a correct-looking address instead of `undefined`.
  */
 
-const PLANNED = "https://m.plavinsky.co.il";
+const PLANNED = "https://plavinsky.co.il";
 
 /** The canonical base, with no trailing slash. */
 export function siteUrl(): string {

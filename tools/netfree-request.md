@@ -25,7 +25,8 @@
 
 ## 3. דומיין האתר
 
-    https://m.plavinsky.co.il
+    https://plavinsky.co.il
+    https://www.plavinsky.co.il
 
 ## הבהרות
 
