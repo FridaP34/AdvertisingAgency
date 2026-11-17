@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1400" width="1000" height="1400">
+  <!-- Shown for a published work whose files have not arrived yet. Matches the
+       share card: paper ground, the rose disc and the brand's square-cut מ,
+       drawn as geometry because an SVG loaded as an image cannot fetch a font. -->
+  <rect width="1000" height="1400" fill="#f4efe9"/>
+  <rect x="60" y="60" width="880" height="1280" fill="none" stroke="#e2d8cc" stroke-width="2"/>
+  <g transform="translate(310 560) scale(5.9)" opacity="0.9">
+    <circle cx="32" cy="32" r="32" fill="#c7867a"/>
+    <g fill="#141110">
+      <path d="M12 13h40v8H12z"/>
+      <path d="M12 13h9v39h-9z"/>
+      <path d="M30 13h9v38h-9z"/>
+      <path d="M48 21h6v31h-6z"/>
+      <path d="M30 44h24v8H30z"/>
+    </g>
+  </g>
+</svg>

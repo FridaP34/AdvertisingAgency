@@ -1,0 +1,19 @@
+# What a deployment does not need.
+#
+# The site reads its works from Supabase Storage at runtime; the folders below
+# are inputs to the import tooling and the local demo, and they added ~60MB of
+# upload time and build disk to every deployment without ever being served.
+
+# Starting assets (210MB): they were already processed into public/works/ and
+# uploaded to Storage. Kept in the repository as the source for re-running the
+# tools.
+SampleAds/
+
+# The local demo database and its files (36MB) — local development only.
+local-supabase-data/
+tools/local-supabase/
+
+# Tools never run on Vercel: they build assets from SampleAds/ or talk to the
+# local demo. Kept because the app does not import from this folder — the
+# generated modules live in src/lib/works/.
+tools/
