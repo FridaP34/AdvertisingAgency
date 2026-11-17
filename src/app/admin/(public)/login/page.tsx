@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { site } from "@/content/site";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { LoginForm } from "@/components/admin/login-form";
 
@@ -17,6 +18,18 @@ export default async function LoginPage({ searchParams }: PageProps) {
   if (!isSupabaseConfigured()) redirect("/admin");
 
   const { next } = await searchParams;
+
+  // Someone who is already signed in has no business on the login form.
+  // `getUser()` validates the session with Supabase rather than trusting the
+  // cookie, and it never throws on a missing or stale session: no user simply
+  // means the form is shown. A failed request does the same, so the page can
+  // always be reached — a guard here that redirected on any doubt would be a
+  // redirect loop again.
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) redirect(safeNext(next));
 
   return (
     <div className="mx-auto flex max-w-md flex-col justify-center py-16 lg:py-24">

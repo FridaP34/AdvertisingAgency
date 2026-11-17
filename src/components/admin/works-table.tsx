@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import type { AdminWorkSummary } from "@/lib/admin/works";
 import { cn } from "@/lib/cn";
-import { deleteWork, reorderWorks, setWorkPublished } from "@/app/admin/actions";
+// The `(protected)` segment is a route group, so this is still `/admin/actions`.
+import { deleteWork, reorderWorks, setWorkPublished } from "@/app/admin/(protected)/actions";
 
 const typeLabel: Record<AdminWorkSummary["type"], string> = {
   "single-ad": "מודעה",

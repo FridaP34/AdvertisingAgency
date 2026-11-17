@@ -6,9 +6,13 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
  *
  * The middleware only keeps the session cookie fresh; this is the check that
  * actually decides access to a server-rendered admin page. It is called from
- * `src/app/admin/layout.tsx`, so every page under `/admin` is guarded at once,
- * and from `admin/page.tsx` as well — a layout alone does not run again on
- * every navigation, but the page does, so the page re-checks.
+ * `src/app/admin/(protected)/layout.tsx`, so every protected admin page is
+ * guarded at once, and from the admin pages as well — a layout alone does not
+ * run again on every navigation, but the page does, so the page re-checks.
+ *
+ * Only pages inside `admin/(protected)/` may call it. The login page lives in
+ * `admin/(public)/login/` and must not: a guard that redirects to
+ * `/admin/login` from `/admin/login` itself is an endless redirect.
  */
 export async function requireAdminUser() {
   const supabase = await createSupabaseServerClient();
